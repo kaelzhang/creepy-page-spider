@@ -25,18 +25,19 @@ $ npm install creepy-phantomjs-runner --save
 ## Usage
 
 ```js
-var runner = require('creepy-phantomjs-runner');
-
-runner()
+var runner = require('creepy-phantomjs-runner')()
 .js('/path/to/jquery.js')
 .js('/path/to/analyzer.js')
 .on('result', (output, url) => {
   console.log('The result is: ' + output)
+  // The result is: Google
+  // (and there is a '\n' at the end)
 })
 .on('error', (err) => {
   console.log(err)
 })
-.open('http://www.google.com')
+
+runner.open('http://www.google.com')
 ```
 
 In `'/path/to/analyzer.js'`:
@@ -44,8 +45,6 @@ In `'/path/to/analyzer.js'`:
 ```js
 console.log('creepy-phantomjs-runner:' + jQuery('#hplogo').attr('title'))
 ```
-
-Then the `'result'` event will output `Google\n`
 
 ### Notice
 
