@@ -1,4 +1,4 @@
-var type = typeof jQuery
+var version = $('body').jquery
 
 // 'creepy-phantomjs-runner:'.length === 24
-console.log('creepy-phantomjs-runner:' + type)
+console.log('creepy-phantomjs-runner:' + version)

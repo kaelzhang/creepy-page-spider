@@ -50,13 +50,19 @@ var local_js = ${local_js}
 var page = webpage.create()
 
 var CONSOLE_LOG_PREFIX = 'creepy-phantomjs-runner:'
+var REGEX_TRAILING_CR = /\n*$/
+
 
 page.onConsoleMessage = function(msg) {
   if (!msg || !~msg.indexOf(CONSOLE_LOG_PREFIX)) {
     return
   }
 
-  console.log(msg.substr(CONSOLE_LOG_PREFIX.length))
+  msg = msg
+  .substr(CONSOLE_LOG_PREFIX.length)
+  // .replace(REGEX_TRAILING_CR, '')
+
+  console.log(msg)
 }
 
 page.open(url, function (status) {
