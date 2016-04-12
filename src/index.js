@@ -4,16 +4,12 @@ const phantomjs = require('phantomjs-prebuilt').path
 const spawn = require('cross-spawn')
 const tmp = require('tmp')
 const async = require('async')
+
 const node_path = require('path')
-
 const fs = require('fs')
+const EventEmitter = require('events').EventEmitter
 
-const {
-  EventEmitter
-} = require('events')
-
-
-STR_RUNNER_JS = 'runner.js'
+const STR_RUNNER_JS = 'runner.js'
 
 
 function runner (options) {
@@ -33,7 +29,7 @@ class Runner extends EventEmitter {
   }
 
   include_jquery () {
-    return this.include_js()
+    return this.js(require.resolve('jquery'))
   }
 
   open (url) {
@@ -52,6 +48,7 @@ class Runner extends EventEmitter {
     })
   }
 
+  // Spawn phantomjs with specific url
   _run_phantomjs (url, callback) {
     let s = spawn(phantomjs.path, [url, this._runner_filename])
 
@@ -70,6 +67,7 @@ class Runner extends EventEmitter {
     })
   }
 
+  // Create runner javascript file
   _create_tmp_js (callback) {
     if (this._tmp_created) {
       return callback(null)
