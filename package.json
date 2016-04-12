@@ -2,7 +2,7 @@
   "name": "creepy-phantomjs-runner",
   "version": "1.0.0",
   "description": "creepy-phantomjs-runner",
-  "main": "./lib",
+  "main": "./src",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js"
   },
@@ -11,7 +11,14 @@
     "url": "git://github.com/kaelzhang/creepy-phantomjs-runner.git"
   },
   "keywords": [
-    "creepy-phantomjs-runner"
+    "creepy",
+    "contrib",
+    "spider",
+    "processer",
+    "web page",
+    "page",
+    "runner",
+    "phantomjs"
   ],
   "engines": {
     "node": ">=0.10.0"
@@ -24,5 +31,12 @@
   "devDependencies": {
     "chai": "~1.7.2",
     "mocha": "~1.13.0"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "cross-spawn": "^2.2.2",
+    "jquery": "^2.2.3",
+    "phantomjs-prebuilt": "^2.1.7",
+    "tmp": "0.0.28"
   }
 }
