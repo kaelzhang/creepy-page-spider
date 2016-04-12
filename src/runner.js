@@ -2,10 +2,23 @@
 
 // Create phantomjs runner
 
-var webpage = require('webpage')
+phantom.onError = function(msg, trace) {
+  fail(trace)
+  phantom.exit()
+}
+
 var system = require('system')
 var args = system.args
 
+
+// phantomjs runner.js {url}
+if (!args.length) {
+  fail('invalid argument')
+}
+
+var url = args[0]
+
+var webpage = require('webpage')
 
 // Tools
 function fail (message) {
@@ -13,36 +26,22 @@ function fail (message) {
     success: false,
     message: message
   }))
-}
 
-
-function log (message) {
-  if (Object(log) !== log) {
-    return
-  }
-
-  console.log(JSON.stringify({
-    success: true,
-    message: message
-  }))
+  phantom.exit()
 }
 
 
 function include_js (page, urls) {
+  // If no external urls, mark it as ok
+  if (!urls.length) {
+    return true
+  }
+
   return urls.every(function (url) {
     return page.injectJs(url)
   })
 }
 
-
-// runner.js {url}
-
-if (!args.length) {
-  return fail('invalid argument')
-}
-
-
-var url = args[0]
 
 // Only allow local_js,
 // all remote javascript files will be downloaded and cached into a temp folder
@@ -50,8 +49,14 @@ var local_js = ${local_js}
 
 var page = webpage.create()
 
+var CONSOLE_LOG_PREFIX = 'creepy-phantomjs-runner:'
+
 page.onConsoleMessage = function(msg) {
-  console.log(msg);
+  if (!msg || !~msg.indexOf(CONSOLE_LOG_PREFIX)) {
+    return
+  }
+
+  console.log(msg.substr(CONSOLE_LOG_PREFIX.length))
 }
 
 page.open(url, function (status) {
@@ -59,5 +64,9 @@ page.open(url, function (status) {
     return fail('failes to open')
   }
 
+  if (!include_js(page, local_js)) {
+    return fail('failes to open')
+  }
 
+  phantom.exit()
 })

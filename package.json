@@ -30,12 +30,12 @@
   },
   "devDependencies": {
     "chai": "~1.7.2",
+    "jquery": "^2.2.3",
     "mocha": "~1.13.0"
   },
   "dependencies": {
     "async": "^2.0.0-rc.3",
     "cross-spawn": "^2.2.2",
-    "jquery": "^2.2.3",
     "phantomjs-prebuilt": "^2.1.7",
     "tmp": "0.0.28"
   }

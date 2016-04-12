@@ -1,5 +1,7 @@
 'use strict'
 
+module.exports = runner
+
 const phantomjs = require('phantomjs-prebuilt').path
 const spawn = require('cross-spawn')
 const tmp = require('tmp')
@@ -28,10 +30,6 @@ class Runner extends EventEmitter {
     return this
   }
 
-  include_jquery () {
-    return this.js(require.resolve('jquery'))
-  }
-
   open (url) {
     this._create_tmp_js((err) => {
       if (err) {
@@ -50,7 +48,7 @@ class Runner extends EventEmitter {
 
   // Spawn phantomjs with specific url
   _run_phantomjs (url, callback) {
-    let s = spawn(phantomjs.path, [url, this._runner_filename])
+    let s = spawn(phantomjs, [this._runner_filename, url])
 
     let output = ''
 
@@ -71,14 +69,6 @@ class Runner extends EventEmitter {
   _create_tmp_js (callback) {
     if (this._tmp_created) {
       return callback(null)
-    }
-
-    let template
-
-    try {
-      template = require('./runner')
-    } catch (e) {
-      return callback(e)
     }
 
     let dir
@@ -104,7 +94,7 @@ class Runner extends EventEmitter {
         return callback(err)
       }
 
-      this._runner_filename = filename = node_path.join(dir, STR_RUNNER_JS)
+      let filename = this._runner_filename = node_path.join(dir, STR_RUNNER_JS)
       fs.writeFile(filename, content, (err) => {
         if (err) {
           return callback(err)
@@ -117,6 +107,14 @@ class Runner extends EventEmitter {
   }
 
   _read_template (callback) {
+    let template
+
+    try {
+      template = require.resolve('./runner')
+    } catch (e) {
+      return callback(e)
+    }
+
     fs.readFile(template, (err, content) => {
       if (err) {
         return callback(err)
