@@ -26,6 +26,7 @@ class Runner extends EventEmitter {
   }
 
   js (filename) {
+    filename = node_path.resolve(filename)
     this._js.push(filename)
     return this
   }
