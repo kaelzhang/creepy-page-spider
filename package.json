@@ -1,0 +1,28 @@
+{
+  "name": "creepy-phantomjs-runner",
+  "version": "1.0.0",
+  "description": "creepy-phantomjs-runner",
+  "main": "./lib",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kaelzhang/creepy-phantomjs-runner.git"
+  },
+  "keywords": [
+    "creepy-phantomjs-runner"
+  ],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "author": "kaelzhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaelzhang/creepy-phantomjs-runner/issues"
+  },
+  "devDependencies": {
+    "chai": "~1.7.2",
+    "mocha": "~1.13.0"
+  }
+}
