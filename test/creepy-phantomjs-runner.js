@@ -11,13 +11,13 @@ describe('runner', function () {
   it('should inject specified scripts', function (done) {
     this.timeout(0);
 
-    var url = 'http://www.baidu.com'
+    var url = 'http://www.bing.com'
 
     var r = runner()
     .js(jquery)
     .js(filename)
     .on('result', (data, url) => {
-      expect(data).to.equal(require('jquery/package.json').version)
+      expect(data).to.equal(require('jquery/package.json').version + '\n')
       expect(url).to.equal(url)
       done()
     })

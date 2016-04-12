@@ -50,20 +50,17 @@ var local_js = ${local_js}
 var page = webpage.create()
 
 var CONSOLE_LOG_PREFIX = 'creepy-phantomjs-runner:'
-var REGEX_TRAILING_CR = /\n*$/
-
 
 page.onConsoleMessage = function(msg) {
   if (!msg || !~msg.indexOf(CONSOLE_LOG_PREFIX)) {
     return
   }
 
-  msg = msg
-  .substr(CONSOLE_LOG_PREFIX.length)
-  // .replace(REGEX_TRAILING_CR, '')
+  msg = msg.substr(CONSOLE_LOG_PREFIX.length)
 
   console.log(msg)
 }
+
 
 page.open(url, function (status) {
   if (status !== 'success') {
@@ -71,7 +68,7 @@ page.open(url, function (status) {
   }
 
   if (!include_js(page, local_js)) {
-    return fail('failes to open')
+    return fail('failes to inject js')
   }
 
   phantom.exit()
